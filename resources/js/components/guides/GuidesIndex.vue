@@ -1,10 +1,11 @@
-<template>
-    <div class="min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+<template>   
         <div class="flex mb-4 place-content-end">
             <div class="px-4 py-2 text-white bg-indigo-600 cursor-pointer hover:bg-indigo-700">
                 <router-link :to="{ name: 'guides.create'}" class="text-sm font-medium">Create Guide</router-link>
             </div>
+           
         </div>   
+        <div class="min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
         <table class="min-w-full border divide-y divide-gray-200 table-auto">
             <thead>
             <tr>

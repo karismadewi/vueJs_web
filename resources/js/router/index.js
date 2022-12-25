@@ -10,7 +10,7 @@ const routes = [
         component: GuidesIndex 
     },
     {
-        path: '/companies/create',
+        path: '/guides/create',
         name: 'guides.create',
         component: GuidesCreate 
     }
