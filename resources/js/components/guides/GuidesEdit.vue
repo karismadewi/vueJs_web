@@ -71,5 +71,4 @@ const saveGuide = async () => {
     await storeGuide({ ...form })
 }
 
-
 </script>
