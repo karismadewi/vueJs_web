@@ -1,97 +1,97 @@
 <template>
-  <div class="hello">
-    <p>
-      For a guide and recipes on how to configure / customize this project,
-      <br>check out the
-      <a
-        href="https://cli.vuejs.org"
-        target="_blank"
-        rel="noopener"
-      >vue-cli documentation</a>
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-        >babel</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-        >eslint</a>
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a>
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a>
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a>
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-        >vue-devtools</a>
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a>
-      </li>
-      <li>
-        <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
-      </li>
-    </ul>
-  </div>
+    <div class="min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+        <div class="flex mb-4 place-content-end">
+            <div class="px-4 py-2 text-white bg-indigo-600 cursor-pointer hover:bg-indigo-700">
+                <router-link :to="{ name: 'guides.create'}" class="text-sm font-medium">Create Guide</router-link>
+            </div>
+        </div>   
+        <table class="min-w-full border divide-y divide-gray-200 table-auto">
+            <thead>
+            <tr>
+                <th class="px-6 py-3 bg-gray-50">
+                    <span
+                        class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">ID</span>
+                </th>
+                <th class="px-6 py-3 bg-gray-50">
+                    <span
+                        class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">Name</span>
+                </th>
+                <th class="px-6 py-3 bg-gray-50">
+                    <span
+                        class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">Address</span>
+                </th>
+                <th class="px-6 py-3 bg-gray-50">
+                    <span
+                        class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">Language</span>
+                </th>
+                <th class="px-6 py-3 bg-gray-50">
+                    <span
+                        class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">Status</span>
+                </th>
+                <th class="px-6 py-3 bg-gray-50">
+                </th>
+            </tr>
+            </thead>
+
+            <tbody class="bg-white divide-y divide-gray-200 divide-solid">
+            <template v-for="item in guides" :key="item.id_guide">
+                <tr class="bg-white">
+                    <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                        {{ item.id_guide }}
+                    </td>
+                    <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                        {{ item.name }}
+                    </td>
+                    <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                        {{ item.address }}
+                    </td>
+                    <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                        {{ item.languages }}
+                    </td>
+                    <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                        {{ item.status }}
+                    </td>
+                    <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                        <button @click="deleteGuide(item.id_guide)" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
-};
+
+import useGuides from "../../composables/guides";
+import {onMounted} from "vue";
+
+export default{
+    setup(){
+        const {guides, getGuides, destroyGuide} = useGuides()
+
+        onMounted(getGuides)
+
+        const deleteGuide = async (id_guide) => {
+            if (!window.confirm('You sure?')) {
+                return
+            }
+            await destroyGuide(id_guide)
+            await getGuides()
+        }
+
+        return{
+            guides,
+            deleteGuide,
+            
+        }
+
+    }
+}
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+
+
