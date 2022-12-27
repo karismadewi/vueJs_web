@@ -19,11 +19,6 @@ export default function usePackages() {
         paket.value = response.data.data
     }
 
-    const destroyPackage = async (id_pk) => {
-        await axios.delete(`/api/packages/${id_pk}`)
-    }
-
-
     const storePackage = async (data) => {
         errors.value = ''
         try {
@@ -37,6 +32,10 @@ export default function usePackages() {
             }
         }
 
+    }
+
+    const destroyPackage = async (id_pk) => {
+        await axios.delete(`/api/packages/${id_pk}`)
     }
 
     const updatePackage = async (id_pk) => {
